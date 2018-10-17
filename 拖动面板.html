@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div style="position: absolute; width: 600px; border: 1px solid red">
+        <div id="title" class="top" style="background-color: #1f2222; height: 40px;color: whitesmoke;">标题</div>
+        <div style="height: 300px">内容</div>
+    </div>
+
+    <script src="http_code.jquery.com_jquery-3.3.1.js"></script>
+    <script>
+        <!-- 改变鼠标的样式  对鼠标进行监听事件 -->
+        $("#title").mouseover(function () {
+           $(this).css("cursor","move")
+        }).mousedown(function (event) {
+            //获取鼠标坐标
+            var start_x = event.screenX;
+            var start_y = event.screenY;
+//offset获取当前元素（title）的偏移量
+            var parent_left = $(this).parent().offset().left;
+            var parent_top = $(this).parent().offset().top;
+            console.log(parent_left);
+            console.log(parent_top);
+
+//事件绑定
+        $(this).on("mousemove",function (e) {
+//                获取新的坐标
+            var new_x = e.screenX;
+            var new_y = e.screenY;
+            console.log("x:" + new_x);
+            console.log("Y:" + new_y);
+
+            var new_parent_x = parent_left + (new_x-start_x);
+            var new_parent_y = parent_top + (new_y-start_y);
+
+            $(this).parent().css("left",new_parent_x + "px");
+            $(this).parent().css("top",new_parent_y + "px");
+
+            }).mouseup(function () {
+            $(this).off("mousemove");
+        })
+        });
+    </script>
+</body>
+</html>
